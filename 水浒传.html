@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>水浒英雄传 · 梁山一百单八将人物志</title>
+    <style>
+        /* 基础样式与宋朝美学配色 */
+        :root {
+            --paper-bg: #f4f1de;
+            /* 宣纸色 */
+            --ink-black: #1a1a1a;
+            /* 墨色 */
+            --vermilion: #8d0801;
+            /* 朱砂红 */
+            --imperial-gold: #b08d57;
+            /* 宫廷金 */
+            --border-tan: #d4a373;
+            /* 古籍边框色 */
+        }
+
+        body {
+            background-color: var(--paper-bg);
+            background-image: url('https://www.transparenttextures.com/patterns/parchment.png');
+            color: var(--ink-black);
+            font-family: "STKaiti", "楷体", serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* 顶部导航 */
+        header {
+            text-align: center;
+            padding: 40px 0;
+            border-bottom: 3px double var(--vermilion);
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        h1 {
+            font-size: 3.5em;
+            margin: 0;
+            color: var(--vermilion);
+            letter-spacing: 15px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-bar {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .nav-btn {
+            padding: 8px 20px;
+            border: 1px solid var(--vermilion);
+            background: transparent;
+            color: var(--vermilion);
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .nav-btn:hover,
+        .nav-btn.active {
+            background: var(--vermilion);
+            color: white;
+        }
+
+        /* 卡片容器 */
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            padding: 0 20px;
+        }
+
+        /* 人物卡片通用样式 */
+        .card {
+            background: rgba(255, 255, 255, 0.7);
+            border: 1px solid var(--border-tan);
+            padding: 15px;
+            position: relative;
+            box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 5px 15px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .seal {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            border: 2px solid var(--vermilion);
+            color: var(--vermilion);
+            padding: 2px 5px;
+            font-weight: bold;
+            transform: rotate(15deg);
+            z-index: 2;
+        }
+
+        .portrait {
+            width: 100%;
+            height: 350px;
+            background: #eee;
+            border: 1px solid #333;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+
+        .portrait img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: sepia(30%) contrast(1.1);
+            /* 增加复古滤镜 */
+        }
+
+        .info h2 {
+            margin: 10px 0;
+            text-align: center;
+            border-bottom: 1px dashed var(--border-tan);
+            padding-bottom: 5px;
+        }
+
+        .bio {
+            font-size: 0.95em;
+            line-height: 1.8;
+            text-indent: 2em;
+            color: #444;
+        }
+
+        /* 反派/朝廷特殊样式 */
+        .imperial {
+            border-color: var(--imperial-gold);
+        }
+
+        .imperial .seal {
+            border-color: #333;
+            color: #333;
+        }
+
+        .imperial h2 {
+            color: #483110;
+        }
+
+        footer {
+            text-align: center;
+            padding: 50px;
+            color: #888;
+            font-size: 0.8em;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>梁山人物志</h1>
+        <div class="nav-bar">
+            <button class="nav-btn active" onclick="filterCards('all')">全员</button>
+            <button class="nav-btn" onclick="filterCards('hero')">梁山好汉</button>
+            <button class="nav-btn" onclick="filterCards('imperial')">朝廷权奸</button>
+        </div>
+    </header>
+
+    <div class="container" id="cardContainer">
+
+        <div class="card hero">
+            <div class="seal">天魁星</div>
+            <div class="portrait"><img src="images/宋江.jpg" alt="宋江">
+            </div>
+            <div class="info">
+                <h2 style="color:var(--vermilion)">及时雨 · 宋江</h2>
+                <div class="bio">郓城县押司出身，仗义疏财。虽为梁山之主，却一心向往招安。其性格复杂，既有江湖豪气，亦有深深的忠君思想。</div>
+            </div>
+        </div>
+
+        <div class="card hero">
+            <div class="seal">首领</div>
+            <div class="portrait"><img src="images/晁盖.jpg" alt="晁盖">
+            </div>
+            <div class="info">
+                <h2 style="color:var(--vermilion)">托塔天王 · 晁盖</h2>
+                <div class="bio">东溪村保正，梁山早期领袖。因揭发生辰纲上山，为人刚勇直爽。攻打曾头市时中箭身亡，是梁山的灵魂奠基人。</div>
+            </div>
+        </div>
+
+        <div class="card hero">
+            <div class="seal">天罡星</div>
+            <div class="portrait"><img src="images/卢俊义.jpg" alt="卢俊义">
+            </div>
+            <div class="info">
+                <h2 style="color:var(--vermilion)">玉麒麟 · 卢俊义</h2>
+                <div class="bio">北京大名府富豪，武艺天下第一。虽身陷囹圄后上山，但凭借卓绝战绩稳坐第二把交椅，尽显一代儒将风采。</div>
+            </div>
+        </div>
+
+        <div class="card hero">
+            <div class="seal">天机星</div>
+            <div class="portrait"><img src="images/吴用.jpg" alt="吴用">
+            </div>
+            <div class="info">
+                <h2 style="color:var(--vermilion)">智多星 · 吴用</h2>
+                <div class="bio">智谋过人，运筹帷幄。从生辰纲到招安后的征战，他是梁山的最高大脑，终随宋江自缢于墓前。</div>
+            </div>
+        </div>
+
+        <div class="card hero">
+            <div class="seal">天伤星</div>
+            <div class="portrait"><img src="images/武松.jpg" alt="武松">
+            </div>
+            <div class="info">
+                <h2 style="color:var(--vermilion)">行者 · 武松</h2>
+                <div class="bio">景阳冈打虎，斗杀西门庆。武松一生快意恩仇，晚年在六和寺出家，是梁山中少数结局圆满的真英雄。</div>
+            </div>
+        </div>
+
+        <div class="card hero">
+            <div class="seal">天杀星</div>
+            <div class="portrait"><img src="images/李逵.jpg" alt="李逵">
+            </div>
+            <div class="info">
+                <h2 style="color:var(--vermilion)">黑旋风 · 李逵</h2>
+                <div class="bio">天性率直，嗜杀也赤诚。对宋江唯命是从，最后饮下毒酒随兄而去，尽显“愚忠”背后的兄弟深情。</div>
+            </div>
+        </div>
+
+        <div class="card imperial">
+            <div class="seal">官家</div>
+            <div class="portrait"><img src="images/赵佶.jpg" alt="宋徽宗">
+            </div>
+            <div class="info">
+                <h2>赵佶 · 宋徽宗</h2>
+                <div class="bio">天才艺术家，极平庸的帝王。宠信奸臣，致使民不聊生，梁山起义亦是因其朝纲不正而起，最终身死异国。</div>
+            </div>
+        </div>
+
+        <div class="card imperial">
+            <div class="seal">太师</div>
+            <div class="portrait"><img src="images/蔡京.jpg" alt="蔡京">
+            </div>
+            <div class="info">
+                <h2>权相 · 蔡京</h2>
+                <div class="bio">北宋六贼之首，权倾朝野。其书画造诣极高，但在政治上排斥异己，祸国殃民，是梁山招安后的死对头。</div>
+            </div>
+        </div>
+
+        <div class="card imperial">
+            <div class="seal">太尉</div>
+            <div class="portrait"><img src="images/高俅.jpg" alt="高俅">
+            </div>
+            <div class="info">
+                <h2>奸雄 · 高俅</h2>
+                <div class="bio">因蹴鞠得宠，官至太尉。他公报私仇，一手逼反林冲等忠直之士，是《水浒》中最令人痛恨的权奸。</div>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>—— 岁在丙午 · 梁山人物志考 ——</p>
+    </footer>
+
+    <script>
+        function filterCards(category) {
+            // 更新按钮状态
+            const btns = document.querySelectorAll('.nav-btn');
+            btns.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            // 过滤卡片
+            const cards = document.querySelectorAll('.card');
+            cards.forEach(card => {
+                if (category === 'all') {
+                    card.style.display = 'block';
+                } else if (card.classList.contains(category)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+    </script>
+
+</body>
+
+</html>
